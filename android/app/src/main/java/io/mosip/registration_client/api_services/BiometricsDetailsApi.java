@@ -126,6 +126,41 @@ public class BiometricsDetailsApi implements BiometricsPigeon.BiometricsApi {
         this.userOnboardService = userOnboardService;
     }
 
+    private LivenessApi livenessApi;
+
+    /** SAJEEV #55/#56: a field id of the form "faceAuth:<userId>" means authenticate this operator's face; nothing is stored. */
+    public static final String FACE_AUTH_PREFIX = "faceAuth:";
+
+    public void setLivenessApi(LivenessApi api) {
+        this.livenessApi = api;
+    }
+
+    /**
+     * SAJEEV #54: a face is stored only if a live session exists and the captured face is bound to it. Fails closed:
+     * no liveness bridge, no decodable image, no live verdict or a failed binding all refuse. Other modalities pass.
+     */
+    private boolean livenessAllowsStoring(List<BiometricsDto> dtos) {
+        if (currentModality != Modality.FACE) {
+            return true;
+        }
+        try {
+            if (livenessApi == null || dtos == null || dtos.isEmpty()) {
+                return false;
+            }
+            BiometricsDto face = dtos.get(0);
+            ByteArrayInputStream bais = new ByteArrayInputStream(CryptoUtil.base64decoder.decode(face.getBioValue()));
+            FaceBDIR bdir = new FaceBDIR(new DataInputStream(bais));
+            byte[] jp2 = bdir.getRepresentation().getRepresentationData().getImageData().getImage();
+            Bitmap bmp = new JP2Decoder(jp2).decode();
+            ByteArrayOutputStream png = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, png);
+            return livenessApi.consumeLiveAndBind(png.toByteArray(), 30000);
+        } catch (Exception e) {
+            Log.e(TAG, "Liveness check of the captured face failed: refusing to store it", e);
+            return false;
+        }
+    }
+
     public void setCallbackActivity(MainActivity mainActivity) {
         this.activity = mainActivity;
     }
@@ -1063,6 +1098,10 @@ public class BiometricsDetailsApi implements BiometricsPigeon.BiometricsApi {
 
             Uri uri = bundle.getParcelable(RegistrationConstants.SBI_INTENT_RESPONSE_KEY);
             InputStream respData = activity.getContentResolver().openInputStream(uri);
+            if (fieldId.startsWith(FACE_AUTH_PREFIX)) {
+                parseFaceAuthResponse(respData);
+                return;
+            }
             boolean isOperatorOnboarding = fieldId.equals(OPERATOR_BIOMETRICS);
             List<BiometricsDto> biometricsDtoList = biometricsService.handleRCaptureResponse(currentModality, respData,
                     getExceptionAttributes(), isOperatorOnboarding);
@@ -1101,6 +1140,12 @@ public class BiometricsDetailsApi implements BiometricsPigeon.BiometricsApi {
                     return;
                 }
 
+                if (!livenessAllowsStoring(biometricsDtoList)) {
+                    Toast.makeText(activity.getApplicationContext(),
+                            "Face liveness could not be verified. Please try again.", Toast.LENGTH_SHORT).show();
+                    biometricResult.error(new SecurityException("LIVENESS_REFUSED"));
+                    return;
+                }
                 biometricsDtoList.forEach(dto -> {
                     try {
                         this.registrationService.getRegistrationDto().addBiometric(
@@ -1128,6 +1173,29 @@ public class BiometricsDetailsApi implements BiometricsPigeon.BiometricsApi {
             Log.e(TAG, "Failed to parse rcapture response", e);
         }
 
+    }
+
+    /**
+     * Face authentication of one onboarded user. Order: parse (no operator de-dup) -> live AND bound (single-use LIVE verdict)
+     * -> 1:1 match against that user's onboarded face. Answers "MATCH" or "NO_MATCH"; a liveness refusal is an error
+     * (LIVENESS_REFUSED). The captured face is never stored here.
+     */
+    private void parseFaceAuthResponse(InputStream respData) {
+        String userId = fieldId.substring(FACE_AUTH_PREFIX.length());
+        try {
+            List<BiometricsDto> dtos = biometricsService.handleRCaptureResponseForAuth(currentModality, respData, getExceptionAttributes());
+            io.sajeev.session.FaceAuthCheck.Outcome o = io.sajeev.session.FaceAuthCheck.run(userId,
+                    () -> livenessAllowsStoring(dtos), () -> biometricsService.matchOperatorFace(userId, dtos),
+                    FaceAuthTickets.INSTANCE);
+            if (o == io.sajeev.session.FaceAuthCheck.Outcome.LIVENESS_REFUSED) {
+                biometricResult.error(new SecurityException("LIVENESS_REFUSED"));
+                return;
+            }
+            biometricResult.success(o.name());
+        } catch (Exception e) {
+            Log.e(TAG, "Face authentication failed", e);
+            biometricResult.error(e);
+        }
     }
 
     private List<String> getExceptionAttributes() {

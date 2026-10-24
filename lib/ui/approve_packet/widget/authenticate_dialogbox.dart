@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:registration_client/liveness/face_auth_flow.dart';
 import 'package:provider/provider.dart';
 import 'package:registration_client/provider/approve_packets_provider.dart';
 import 'package:registration_client/utils/app_config.dart';
@@ -17,6 +18,7 @@ class AuthenticateDialogBox extends StatefulWidget {
 }
 
 class _AuthenticateDialogBoxState extends State<AuthenticateDialogBox> {
+  bool _faceAuthOn = false;
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -31,6 +33,9 @@ class _AuthenticateDialogBoxState extends State<AuthenticateDialogBox> {
   void initState() {
     authProvider = Provider.of<AuthProvider>(context, listen: false);
     super.initState();
+    FaceAuthFlow.enabled().then((v) {
+      if (mounted) setState(() => _faceAuthOn = v);
+    });
   }
 
   _showErrorInSnackbar() {
@@ -61,6 +66,15 @@ class _AuthenticateDialogBoxState extends State<AuthenticateDialogBox> {
     return snackbarText;
   }
 
+  /// SAJEEV #56: supervisor authentication by face (liveness, binding, 1:1 match). The Java side refuses without its ticket.
+  Future<bool> _authenticatePacketFace() async {
+    if (username.text.trim().isEmpty) return false;
+    final ok = await FaceAuthFlow.verify(context, username.text.trim(), 'SUPERVISOR');
+    if (!ok) return false;
+    await authProvider.authenticatePacketWithFace(username.text.trim());
+    return authProvider.isPacketAuthenticated;
+  }
+
   Future<bool> _authenticatePacketPassword() async {
     if (_formKey.currentState!.validate()) {
       await authProvider.authenticatePacket(username.text, password.text);
@@ -75,11 +89,11 @@ class _AuthenticateDialogBoxState extends State<AuthenticateDialogBox> {
     return false;
   }
 
-  Future<void> submitReviews() async {
+  Future<void> submitReviews({bool face = false}) async {
     setState(() {
       loading = true;
     });
-    bool isAuthenticated = await _authenticatePacketPassword();
+    bool isAuthenticated = face ? await _authenticatePacketFace() : await _authenticatePacketPassword();
     if (isAuthenticated) {
       try {
         await context.read<ApprovePacketsProvider>().submitSelected();
@@ -299,6 +313,16 @@ class _AuthenticateDialogBoxState extends State<AuthenticateDialogBox> {
                       const SizedBox(
                         width: 25,
                       ),
+                      if (_faceAuthOn)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12),
+                          child: OutlinedButton(
+                            onPressed: username.text.trim().isEmpty ? null : () async {
+                              await submitReviews(face: true);
+                            },
+                            child: Text(AppLocalizations.of(context)!.liveness_auth_with_face),
+                          ),
+                        ),
                       SizedBox(
                         width: 150,
                         height: 65,

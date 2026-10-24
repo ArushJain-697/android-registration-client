@@ -31,6 +31,7 @@ import 'package:registration_client/provider/global_provider.dart';
 import 'package:registration_client/utils/app_config.dart';
 import 'package:registration_client/utils/responsive.dart';
 import 'package:registration_client/ui/widgets/password_component.dart';
+import 'package:registration_client/liveness/face_auth_flow.dart';
 import 'package:registration_client/ui/widgets/username_component.dart';
 import 'package:colorful_progress_indicators/colorful_progress_indicators.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -76,6 +77,9 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     connectivityProvider =
         Provider.of<ConnectivityProvider>(context, listen: false);
     _initializeAppData();
+    FaceAuthFlow.enabled().then((v) {
+      if (mounted) setState(() => _faceAuthOn = v);
+    });
     super.initState();
     WidgetsBinding.instance.addObserver(LifecycleEventHandler(
       resumeCallBack: () async {
@@ -272,14 +276,34 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     }
   }
 
+  bool _faceLogin = false;
+  bool _faceAuthOn = false;
+
+  /// SAJEEV #55: face login (offline session). The Java side refuses without its single-use face ticket.
+  Future<void> _loginWithFace() async {
+    if (username.trim().isEmpty) return;
+    final ok = await FaceAuthFlow.verify(context, username.trim(), 'OPERATOR');
+    if (!ok) {
+      _showInSnackBar(appLocalizations.liveness_failure_liveness);
+      return;
+    }
+    _faceLogin = true;
+    try {
+      await _getLoginAction();
+      await globalProvider.getThresholdValues();
+    } finally {
+      _faceLogin = false;
+    }
+  }
+
   _getLoginAction() async {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     FocusManager.instance.primaryFocus?.unfocus();
-    if (password.isEmpty) {
+    if (!_faceLogin && password.isEmpty) {
       _showInSnackBar(appLocalizations.password_required);
       return;
     }
-    if (password.length > (int.tryParse(authProvider.passwordLength) ?? 50)) {
+    if (!_faceLogin && password.length > (int.tryParse(authProvider.passwordLength) ?? 50)) {
       _showInSnackBar(appLocalizations.password_exceed);
       return;
     }
@@ -296,8 +320,12 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     if (version.startsWith("1.1.5")) {
       await _saveAllHeaders();
     }
-    await authProvider.authenticateUser(
-        username, password, connectivityProvider.isConnected);
+    if (_faceLogin) {
+      await authProvider.authenticateUserWithFace(username);
+    } else {
+      await authProvider.authenticateUser(
+          username, password, connectivityProvider.isConnected);
+    }
 
     if (!authProvider.isLoggedIn) {
       authProvider.setIsSyncing(false);
@@ -515,6 +543,14 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                       username = v;
                     });
                   },
+                )
+              : const SizedBox(),
+          context.watch<AuthProvider>().isValidUser &&
+                  !context.watch<AuthProvider>().isNetworkPresent &&
+                  _faceAuthOn
+              ? TextButton(
+                  onPressed: _loginWithFace,
+                  child: Text(appLocalizations.liveness_login_with_face),
                 )
               : const SizedBox(),
           context.watch<AuthProvider>().isValidUser &&

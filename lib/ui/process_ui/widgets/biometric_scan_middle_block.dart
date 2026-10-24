@@ -7,6 +7,7 @@
 
 import 'dart:convert';
 
+import 'package:registration_client/liveness/liveness_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -190,6 +191,7 @@ class _BiometricScanMiddleBlockState extends State<BiometricScanMiddleBlock> {
                       onPressed: () async {
                         if (widget.biometricAttributeData.attemptNo <
                             widget.biometricAttributeData.noOfCapturesAllowed) {
+                          if (!await LivenessGate.passIfFace(context, widget.parameterTitle)) return;
                           await BiometricsApi().invokeDiscoverSbi(
                               widget.field.id!, widget.parameterTitle);
                           await BiometricsApi()
@@ -295,6 +297,7 @@ class _BiometricScanMiddleBlockState extends State<BiometricScanMiddleBlock> {
                 if (widget.biometricAttributeData.attemptNo <
                     widget.biometricAttributeData.noOfCapturesAllowed) {
                   List<Uint8List?> temp = [];
+                  if (!await LivenessGate.passIfFace(context, widget.parameterTitle)) return;
                   await BiometricsApi().invokeDiscoverSbi(
                       widget.field.id!, widget.parameterTitle);
                   await BiometricsApi()

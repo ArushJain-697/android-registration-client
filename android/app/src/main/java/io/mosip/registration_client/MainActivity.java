@@ -85,6 +85,8 @@ import io.mosip.registration_client.api_services.MasterDataSyncApi;
 import io.mosip.registration_client.api_services.ProcessSpecDetailsApi;
 import io.mosip.registration_client.api_services.RegistrationApi;
 import io.mosip.registration_client.api_services.SecureScreenApi;
+import io.mosip.registration_client.api_services.LivenessApi;
+import io.mosip.registration_client.model.LivenessPigeon;
 import io.mosip.registration_client.api_services.TransliterationApi;
 import io.mosip.registration_client.api_services.UserDetailsApi;
 import io.mosip.registration_client.model.AuditResponsePigeon;
@@ -204,6 +206,9 @@ public class MainActivity extends FlutterActivity {
 
     @Inject
     SecureScreenApi secureScreenApi;
+
+    @Inject
+    LivenessApi livenessApi;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -420,6 +425,9 @@ public class MainActivity extends FlutterActivity {
         GlobalConfigSettingsPigeon.GlobalConfigSettingsApi.setup(flutterEngine.getDartExecutor().getBinaryMessenger(), globalConfigSettingsApi);
         SecureScreenPigeon.SecureScreenApi.setup(flutterEngine.getDartExecutor().getBinaryMessenger(), secureScreenApi);
         secureScreenApi.setCallbackActivity(this);
+        LivenessPigeon.LivenessApi.setup(flutterEngine.getDartExecutor().getBinaryMessenger(), livenessApi);
+        livenessApi.attach(getApplicationContext(), flutterEngine.getDartExecutor().getBinaryMessenger());
+        biometricsDetailsApi.setLivenessApi(livenessApi);
     }
 
     @Override

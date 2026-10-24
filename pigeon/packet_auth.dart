@@ -15,6 +15,10 @@ abstract class PacketAuthApi {
   @async
   PacketAuth authenticate(String username, String password);
 
+  /// SAJEEV #55/#56: operator or supervisor authentication by face. Needs the single-use face ticket from the Java side.
+  @async
+  PacketAuth authenticateWithFace(String username);
+
   @async
   void syncPacketAll(List<String> packetIds);
 
