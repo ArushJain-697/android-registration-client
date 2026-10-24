@@ -37,7 +37,7 @@ public class LivenessApi implements LivenessPigeon.LivenessApi {
     /** Called from MainActivity once the Flutter engine exists. */
     public synchronized void attach(Context context, BinaryMessenger messenger) {
         events = new LivenessPigeon.LivenessEvents(messenger);
-        controller = new AndroidLivenessController(context, SBI_PACKAGE, FEED_CLASS, (id, p) -> {
+        controller = new AndroidLivenessController(context, SBI_PACKAGE, FEED_CLASS, this::engineProperties, (id, p) -> {
             if ("LIVE".equals(p.phase)) {
                 liveGate.markLive(id);
             }
@@ -48,6 +48,40 @@ public class LivenessApi implements LivenessPigeon.LivenessApi {
                 }
             });
         });
+    }
+
+    private volatile io.mosip.registration.clientmanager.repository.GlobalParamRepository params;
+
+    /** The client's global parameters, so the engine follows the client's liveness settings (set by BiometricsDetailsApi). */
+    public void useGlobalParams(io.mosip.registration.clientmanager.repository.GlobalParamRepository repository) {
+        this.params = repository;
+    }
+
+    /** Every engine setting the client holds (mosip.registration.liveness.*, with .resident/.operator/.supervisor overrides). */
+    java.util.Properties engineProperties() {
+        java.util.Properties p = new java.util.Properties();
+        io.mosip.registration.clientmanager.repository.GlobalParamRepository r = params;
+        if (r == null) {
+            return p;
+        }
+        for (String key : io.sajeev.policy.Config.DEFAULTS.keySet()) {
+            put(p, r, key);
+            for (String w : io.sajeev.policy.Config.WORKFLOWS) {
+                put(p, r, key + "." + w);
+            }
+        }
+        return p;
+    }
+
+    private static void put(java.util.Properties p, io.mosip.registration.clientmanager.repository.GlobalParamRepository r, String suffix) {
+        try {
+            String v = r.getCachedStringGlobalParam(io.sajeev.policy.Config.PREFIX + suffix);
+            if (v != null && !v.trim().isEmpty()) {
+                p.setProperty(io.sajeev.policy.Config.PREFIX + suffix, v.trim());
+            }
+        } catch (RuntimeException ignored) {
+            // a missing parameter keeps the engine default
+        }
     }
 
     static LivenessPigeon.LivenessProgressDto toDto(AndroidLivenessController.Progress p) {

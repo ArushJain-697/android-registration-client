@@ -133,15 +133,29 @@ public class BiometricsDetailsApi implements BiometricsPigeon.BiometricsApi {
 
     public void setLivenessApi(LivenessApi api) {
         this.livenessApi = api;
+        api.useGlobalParams(globalParamRepository);
     }
 
     /**
      * SAJEEV #54: a face is stored only if a live session exists and the captured face is bound to it. Fails closed:
      * no liveness bridge, no decodable image, no live verdict or a failed binding all refuse. Other modalities pass.
      */
+    /** The device capture timeout from the client's settings (30 s when it is not set), for Binding's time window. */
+    private long captureTimeoutMillis() {
+        try {
+            int t = globalParamRepository.getCachedIntCaptureTimeout();
+            return t > 0 ? t : 30000L;
+        } catch (RuntimeException e) {
+            return 30000L;
+        }
+    }
+
     private boolean livenessAllowsStoring(List<BiometricsDto> dtos) {
         if (currentModality != Modality.FACE) {
             return true;
+        }
+        if (!new io.mosip.registration.clientmanager.util.LivenessSettings(globalParamRepository).enabled()) {
+            return true; // an administrator switched liveness off (mosip.registration.liveness.enabled=false)
         }
         try {
             if (livenessApi == null || dtos == null || dtos.isEmpty()) {
@@ -154,7 +168,7 @@ public class BiometricsDetailsApi implements BiometricsPigeon.BiometricsApi {
             Bitmap bmp = new JP2Decoder(jp2).decode();
             ByteArrayOutputStream png = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.PNG, 100, png);
-            return livenessApi.consumeLiveAndBind(png.toByteArray(), 30000);
+            return livenessApi.consumeLiveAndBind(png.toByteArray(), captureTimeoutMillis());
         } catch (Exception e) {
             Log.e(TAG, "Liveness check of the captured face failed: refusing to store it", e);
             return false;

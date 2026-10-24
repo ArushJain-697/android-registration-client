@@ -54,6 +54,7 @@ class _BiometricCaptureScanBlockPortraitState
     globalProvider = Provider.of<GlobalProvider>(context, listen: false);
 
     super.initState();
+    LivenessGate.resetAttempts(); // a new capture screen is a new attempt flow
   }
 
   setInitialState() {

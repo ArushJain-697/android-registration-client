@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:registration_client/pigeon/liveness_pigeon.dart';
+import 'package:registration_client/pigeon/process_spec_pigeon.dart';
 
 import 'liveness_pane.dart';
-import 'liveness_states.g.dart';
 import 'liveness_texts.g.dart';
 import 'liveness_ui_state.dart';
 
@@ -23,11 +23,35 @@ class LivenessRetries {
 }
 
 class LivenessGate {
-  static final LivenessRetries retries = LivenessRetries(3);
+  static LivenessRetries retries = LivenessRetries(3);
+  static const _enabledKey = 'mosip.registration.liveness.enabled';
+  static const _maxRetriesKey = 'mosip.registration.liveness.maxRetries';
+
+  /// The client's own settings (global parameters): liveness on unless exactly "false"; retries default 3, never below 1.
+  static Future<void> _loadSettings() async {
+    try {
+      final r = int.tryParse((await ProcessSpecApi().getStringValueGlobalParam(_maxRetriesKey)).trim());
+      final max = (r == null || r < 1) ? 3 : r;
+      if (max != retries.max) retries = LivenessRetries(max);
+    } catch (_) {
+      // keep the current limit
+    }
+  }
+
+  static Future<bool> _enabled() async {
+    try {
+      return (await ProcessSpecApi().getStringValueGlobalParam(_enabledKey)).trim().toLowerCase() != 'false';
+    } catch (_) {
+      return true; // a missing or unreadable setting never switches liveness off
+    }
+  }
 
   /// True when the capture may start. Non-face modalities pass through untouched.
   static Future<bool> passIfFace(BuildContext context, String modality, {String workflow = 'RESIDENT'}) async {
     if (modality.replaceAll(' ', '') != 'Face') return true;
+    if (!await _enabled()) return true; // an administrator switched liveness off
+    await _loadSettings();
+    if (!context.mounted) return false;
     final lang = _lang(context);
     if (retries.exhausted) {
       await _info(context, livenessTexts['failure.max_retries']![lang]!);
