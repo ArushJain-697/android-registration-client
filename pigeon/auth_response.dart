@@ -28,6 +28,9 @@ class AuthResponse {
 abstract class AuthResponseApi {
   @async
   AuthResponse login(String username, String password, bool isConnected);
+  /// SAJEEV #55: offline login after a face check that matched live. Needs the single-use face ticket from the Java side.
+  @async
+  AuthResponse loginWithFace(String username);
   @async
   String logout();
   @async

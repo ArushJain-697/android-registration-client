@@ -191,7 +191,17 @@ public enum AuditEvent {
     BIO_SDK_QUALITY_SCORE_FAILED("REG-EVT-094", SYSTEM_EVENT.getCode(), "BIO_SDK_QUALITY_SCORE_FAILED", "Unable to fetch SDK quality score"),
     BIO_SDK_FILES_NOT_FOUND("REG-EVT-095", SYSTEM_EVENT.getCode(), "BIO_SDK_FILES_NOT_FOUND", "No biometric SDK files found in assets"),
     BIO_SDK_PROVIDER_REGISTERED("REG-EVT-096", SYSTEM_EVENT.getCode(), "BIO_SDK_PROVIDER_REGISTERED", "Biometric SDK provider registered"),
-    BIO_SDK_DEDUPE_MATCH("REG-EVT-097", SYSTEM_EVENT.getCode(), "BIO_SDK_DEDUPE_MATCH", "Biometric data matched with existing operator biometrics");
+    BIO_SDK_DEDUPE_MATCH("REG-EVT-097", SYSTEM_EVENT.getCode(), "BIO_SDK_DEDUPE_MATCH", "Biometric data matched with existing operator biometrics"),
+
+    // SAJEEV liveness (own ID block REG-LIV; no clash with REG-LOAD, REG-AUTH, REG-EVT and the other blocks)
+    REG_LIVENESS_START("REG-LIV-001", USER_EVENT.getCode(), "REG_LIVENESS_START", "Liveness check started"),
+    REG_LIVENESS_PASSIVE_RESULT("REG-LIV-002", USER_EVENT.getCode(), "REG_LIVENESS_PASSIVE_RESULT", "Passive liveness result"),
+    REG_LIVENESS_CHALLENGE_PROMPTED("REG-LIV-003", USER_EVENT.getCode(), "REG_LIVENESS_CHALLENGE_PROMPTED", "Active challenge prompted"),
+    REG_LIVENESS_CHALLENGE_RESULT("REG-LIV-004", USER_EVENT.getCode(), "REG_LIVENESS_CHALLENGE_RESULT", "Active challenge result"),
+    REG_LIVENESS_BINDING("REG-LIV-005", USER_EVENT.getCode(), "REG_LIVENESS_BINDING", "Captured face bound to the live face"),
+    REG_LIVENESS_VERDICT("REG-LIV-006", USER_EVENT.getCode(), "REG_LIVENESS_VERDICT", "Liveness verdict"),
+    REG_LIVENESS_ENGINE_UNAVAILABLE("REG-LIV-009", SYSTEM_EVENT.getCode(), "REG_LIVENESS_ENGINE_UNAVAILABLE", "Liveness engine unavailable"),
+    REG_LIVENESS_FACE_LOGIN("REG-LIV-010", USER_EVENT.getCode(), "REG_LIVENESS_FACE_LOGIN", "Login with face (liveness, binding and match)");
 
     AuditEvent(String id, String type, String name, String description) {
         this.id = id;

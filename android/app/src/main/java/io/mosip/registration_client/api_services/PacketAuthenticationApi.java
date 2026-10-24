@@ -92,6 +92,17 @@ public class PacketAuthenticationApi implements PacketAuthPigeon.PacketAuthApi {
     }
 
     @Override
+    public void authenticateWithFace(@NonNull String username, @NonNull PacketAuthPigeon.Result<PacketAuthPigeon.PacketAuth> result) {
+        auditManagerService.audit(AuditEvent.CREATE_PACKET_AUTH, Components.REGISTRATION);
+        if (!FaceAuthTickets.INSTANCE.consume(username)) {
+            auditManagerService.audit(AuditEvent.CREATE_PACKET_AUTH_FAILED, Components.REGISTRATION);
+            result.success(getAuthErrorResponse("REG_INVALID_REQUEST"));
+            return;
+        }
+        result.success(new PacketAuthPigeon.PacketAuth.Builder().setResponse("REG_AUTHENTICATION_SUCCESS").build());
+    }
+
+    @Override
     public void syncPacketAll(@NonNull List<String> packetIds, @NonNull PacketAuthPigeon.Result<Void> result) {
         auditManagerService.audit(AuditEvent.SYNC_REGISTRATION_PACKET_STATUS,Components.REGISTRATION);
         Integer packetSize = packetIds.size();
