@@ -131,7 +131,7 @@
   "reference_number": "ಉಲ್ಲೇಖ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
   "select_value_message": "ದಯವಿಟ್ಟು ಮೌಲ್ಯವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
   "enter_value_message": "ದಯವಿಟ್ಟು ಒಂದು ಮೌಲ್ಯವನ್ನು ನಮೂದಿಸಿ",
-  "invalid_input": "ಅಮಾನ್ಯ ಇನ್\u200Cಪುಟ್",
+  "invalid_input": "ಅಮಾನ್ಯ ಇನ್‌ಪುಟ್",
   "reference_number_validation": "ದಯವಿಟ್ಟು ಉಲ್ಲೇಖ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
   "referenceNumber": "{language, select, eng{Reference Number} ara{رقم المرجع} fra{Numéro de réference} kan{ಉಲ್ಲೇಖ ಸಂಖ್ಯೆ} hin{संदर्भ संख्या} tam{குறிப்பு எண்} other{Reference Number}}",
   "@referenceNumber": {
@@ -158,7 +158,7 @@
       }
     }
   },
-  "total_selected_application": "{selected}/{total} ಅಪ್ಲಿಕೇಶನ್\u200Cಗಳನ್ನು ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ",
+  "total_selected_application": "{selected}/{total} ಅಪ್ಲಿಕೇಶನ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ",
   "@total_selected_application": {
     "description": "A message with a two parameter",
     "placeholders": {
@@ -317,15 +317,15 @@
   "enter_application_id": "ದಯವಿಟ್ಟು ಅಪ್ಲಿಕೇಶನ್ ಐಡಿಯನ್ನು ನಮೂದಿಸಿ",
   "prid_length_greater": "ಅಪ್ಲಿಕೇಶನ್ ID ನಿಖರವಾಗಿ {length} ಅಂಕೆಗಳಾಗಿರಬೇಕು.",
   "@prid_length_greater": {
-     "placeholders": {
-         "length": {
-          "type": "int"
-         }
-     }
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
   },
   "okay": "ಸರಿ",
   "no_internet_connection": "ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕವಿಲ್ಲ!",
-  "connect_and_retry": "ದಯವಿಟ್ಟು ಇಂಟರ್ನೆಟ್\u200Cನೊಂದಿಗೆ ಸಂಪರ್ಕಿಸಿ ಮತ್ತು ಮರುಪ್ರಯತ್ನಿಸಿ.",
+  "connect_and_retry": "ದಯವಿಟ್ಟು ಇಂಟರ್ನೆಟ್‌ನೊಂದಿಗೆ ಸಂಪರ್ಕಿಸಿ ಮತ್ತು ಮರುಪ್ರಯತ್ನಿಸಿ.",
   "retry": "ಮರುಪ್ರಯತ್ನಿಸಿ",
   "key": "ಕೀ",
   "server_value": "ಸರ್ವರ್ ಮೌಲ್ಯ",
@@ -340,19 +340,19 @@
   "scheduled_job_settings": "ನಿಗದಿತ ಉದ್ಯೋಗ ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
   "doc_size_exceeded": "ಫೈಲ್ ಗಾತ್ರ ಮಿತಿ {size} ಮೀರಿದೆ",
   "@doc_size_exceeded": {
-       "placeholders": {
-         "size": {
-           "type": "String"
-         }
-       }
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
   },
   "age_should_not_be_greater": "ವಯಸ್ಸು {age} ವರ್ಷಗಳಿಗಿಂತ ಹೆಚ್ಚಿರಬಾರದು",
   "@age_should_not_be_greater": {
-       "placeholders": {
-            "age": {
-            "type": "int"
-            }
-       }
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
   },
   "onboard_officer_biometric": "ಅಧಿಕಾರಿಯ ಬಯೋಮೆಟ್ರಿಕ್ ನೋಂದಣಿ",
   "update_officer_biometric": "ಅಧಿಕಾರಿಯ ಬಯೋಮೆಟ್ರಿಕ್ ನವೀಕರಣ",
@@ -361,12 +361,85 @@
   "search_for_key": "ಕೀಗಾಗಿ ಹುಡುಕಿ",
   "no_devices_found": "ಯಾವುದೇ ಸಾಧನಗಳು ಕಂಡುಬಂದಿಲ್ಲ",
   "connect_devices_and_scan": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸಾಧನಗಳನ್ನು ಸಂಪರ್ಕಿಸಿ ಮತ್ತು ಅವುಗಳನ್ನು ಪತ್ತೆಹಚ್ಚಲು 'ಸ್ಕ್ಯಾನ್' ಅನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ",
-  "search_for_key": "ಕೀಗಾಗಿ ಹುಡುಕಿ",
   "sync_restart_dialog_message": "ನೀವು ಮರುಪ್ರಾರಂಭ ಕ್ಲಿಕ್ ಮಾಡಿದ ನಂತರ ಅಪ್ಲಿಕೇಶನ್ ಮರುಪ್ರಾರಂಭವಾಗುತ್ತದೆ ಮತ್ತು ನಿಮ್ಮನ್ನು ಲಾಗಿನ್ ಪುಟಕ್ಕೆ ಮರುನಿರ್ದೇಶಿಸಲಾಗುತ್ತದೆ.",
   "sync_restart_button": "ಮರುಪ್ರಾರಂಭ",
   "app_restart_message": "ಕಾನ್ಫಿಗರೇಶನ್ ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ. ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಮರುಪ್ರಾರಂಭಿಸಲಾಗುತ್ತಿದೆ...",
   "select_option": "ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ",
   "cron_expression": "ಕ್ರಾನ್ ಎಕ್ಸ್‌ಪ್ರೆಶನ್",
   "id": "ID",
-  "name": "ಹೆಸರು"
+  "name": "ಹೆಸರು",
+  "liveness_passive_checking": "ಮುಖದ ಸಜೀವತೆಯನ್ನು ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ…",
+  "liveness_challenge_blink": "ದಯವಿಟ್ಟು ಕಣ್ಣು ಮಿಟುಕಿಸಿ",
+  "liveness_challenge_smile": "ದಯವಿಟ್ಟು ನಗಿ",
+  "liveness_challenge_turn_left": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ತಲೆಯನ್ನು ಎಡಕ್ಕೆ ತಿರುಗಿಸಿ",
+  "liveness_challenge_turn_right": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ತಲೆಯನ್ನು ಬಲಕ್ಕೆ ತಿರುಗಿಸಿ",
+  "liveness_challenge_look_left": "ದಯವಿಟ್ಟು ಎಡಕ್ಕೆ ನೋಡಿ",
+  "liveness_challenge_look_right": "ದಯವಿಟ್ಟು ಬಲಕ್ಕೆ ನೋಡಿ",
+  "liveness_challenge_look_up": "ದಯವಿಟ್ಟು ಮೇಲೆ ನೋಡಿ",
+  "liveness_challenge_look_down": "ದಯವಿಟ್ಟು ಕೆಳಗೆ ನೋಡಿ",
+  "liveness_challenge_eyes_closed_hold": "ದಯವಿಟ್ಟು ಕಣ್ಣು ಮುಚ್ಚಿ ಹಾಗೆಯೇ ಇರಿ",
+  "liveness_challenge_open_mouth": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಬಾಯಿ ತೆರೆಯಿರಿ",
+  "liveness_feedback_continue": "ದಯವಿಟ್ಟು ಮುಂದುವರಿಸಿ",
+  "liveness_feedback_action_detected": "ಕ್ರಿಯೆ ಪತ್ತೆಯಾಯಿತು",
+  "liveness_feedback_hold_still": "ಸ್ಥಿರವಾಗಿರಿ",
+  "liveness_feedback_captured": "ಚೆನ್ನಾಗಿದೆ, ಮುಖವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ",
+  "liveness_failure_liveness": "ನಮಗೆ ಮುಖದ ಸಜೀವತೆಯನ್ನು ದೃಢೀಕರಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  "liveness_failure_pad": "ಮುಖದ ಪರಿಶೀಲನೆಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  "liveness_failure_max_retries": "ಮುಖದ ಪರಿಶೀಲನೆಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮರುಪಡೆಯುವಿಕೆ ಪ್ರಕ್ರಿಯೆಯನ್ನು ಅನುಸರಿಸಿ.",
+  "liveness_hint_look_camera": "ನೇರವಾಗಿ ಕ್ಯಾಮೆರಾವನ್ನು ನೋಡಿ.",
+  "liveness_hint_face_visible": "ನಿಮ್ಮ ಮುಖ ಸ್ಪಷ್ಟವಾಗಿ ಕಾಣುತ್ತಿದೆಯೇ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.",
+  "liveness_hint_lighting": "ಬೆಳಕನ್ನು ಸುಧಾರಿಸಿ.",
+  "liveness_hint_capture_area": "ನಿಮ್ಮ ಮುಖವನ್ನು ಸೆರೆಹಿಡಿಯುವ ಪ್ರದೇಶದೊಳಗೆ ಇರಿಸಿ.",
+  "liveness_hint_follow_prompt": "ಸೂಚಿಸಿದ ಕ್ರಿಯೆಯನ್ನು ಮಾಡಿ.",
+  "liveness_error_device_unavailable": "ಯಾವುದೇ ಕ್ಯಾಮೆರಾ ಸಾಧನ ಕಂಡುಬಂದಿಲ್ಲ",
+  "liveness_error_device_disconnected": "ಸಾಧನದ ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಸಂಪರ್ಕಿಸಿ.",
+  "liveness_error_camera_unavailable": "ಕ್ಯಾಮೆರಾ ಲಭ್ಯವಿಲ್ಲ",
+  "liveness_error_face_not_detected": "ನಿಮ್ಮ ಮುಖವನ್ನು ಸೆರೆಹಿಡಿಯುವ ಪ್ರದೇಶದೊಳಗೆ ಇರಿಸಿ",
+  "liveness_error_multiple_faces": "ದೃಶ್ಯದಲ್ಲಿ ಒಬ್ಬ ವ್ಯಕ್ತಿ ಮಾತ್ರ ಇರಬೇಕು",
+  "liveness_error_poor_quality_small": "ಕ್ಯಾಮೆರಾದ ಹತ್ತಿರ ಬನ್ನಿ",
+  "liveness_error_poor_quality_dark": "ಬೆಳಕನ್ನು ಸುಧಾರಿಸಿ",
+  "liveness_error_poor_quality_blurry": "ಸ್ಥಿರವಾಗಿರಿ ಮತ್ತು ಕ್ಯಾಮೆರಾ ಫೋಕಸ್‌ನಲ್ಲಿರಲಿ",
+  "liveness_error_invalid_frame": "ಸಾಧನದಲ್ಲಿ ದೋಷ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  "liveness_error_active_required": "ನಮಗೆ ಮುಖದ ಸಜೀವತೆಯನ್ನು ದೃಢೀಕರಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  "liveness_error_challenge_failed": "ನಮಗೆ ಮುಖದ ಸಜೀವತೆಯನ್ನು ದೃಢೀಕರಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. ಸೂಚಿಸಿದ ಕ್ರಿಯೆಯನ್ನು ಮಾಡಿ.",
+  "liveness_error_challenge_timeout": "ನಮಗೆ ಮುಖದ ಸಜೀವತೆಯನ್ನು ದೃಢೀಕರಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. ತೋರಿಸಿದ ಸಮಯದೊಳಗೆ ಪ್ರತಿಕ್ರಿಯಿಸಿ.",
+  "liveness_error_engine": "ಮುಖ ಪರಿಶೀಲನೆ ಲಭ್ಯವಿಲ್ಲ",
+  "liveness_spoken_challenge_blink": "ದಯವಿಟ್ಟು ಕಣ್ಣು ಮಿಟುಕಿಸಿ",
+  "liveness_spoken_challenge_smile": "ದಯವಿಟ್ಟು ನಗಿ",
+  "liveness_spoken_challenge_turn_left": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ತಲೆಯನ್ನು ಎಡಕ್ಕೆ ತಿರುಗಿಸಿ",
+  "liveness_spoken_challenge_turn_right": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ತಲೆಯನ್ನು ಬಲಕ್ಕೆ ತಿರುಗಿಸಿ",
+  "liveness_spoken_challenge_look_left": "ದಯವಿಟ್ಟು ಎಡಕ್ಕೆ ನೋಡಿ",
+  "liveness_spoken_challenge_look_right": "ದಯವಿಟ್ಟು ಬಲಕ್ಕೆ ನೋಡಿ",
+  "liveness_spoken_challenge_look_up": "ದಯವಿಟ್ಟು ಮೇಲೆ ನೋಡಿ",
+  "liveness_spoken_challenge_look_down": "ದಯವಿಟ್ಟು ಕೆಳಗೆ ನೋಡಿ",
+  "liveness_spoken_challenge_eyes_closed_hold": "ದಯವಿಟ್ಟು ಕಣ್ಣು ಮುಚ್ಚಿ ಹಾಗೆಯೇ ಇರಿ",
+  "liveness_spoken_challenge_open_mouth": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಬಾಯಿ ತೆರೆಯಿರಿ",
+  "liveness_ui_badge_checking": "ಪರಿಶೀಲನೆ",
+  "liveness_ui_badge_challenge": "ಸವಾಲು",
+  "liveness_ui_badge_not_verified": "ಪರಿಶೀಲಿಸಿಲ್ಲ",
+  "liveness_ui_badge_stopped": "ನಿಲ್ಲಿಸಲಾಗಿದೆ",
+  "liveness_ui_badge_retry": "ಮರುಪ್ರಯತ್ನ ಸಾಧ್ಯ",
+  "liveness_ui_badge_device_error": "ಸಾಧನ ದೋಷ",
+  "liveness_ui_badge_verified": "ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
+  "liveness_ui_try_again": "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ",
+  "liveness_ui_rescan": "ಸಾಧನಗಳನ್ನು ಮತ್ತೆ ಹುಡುಕಿ",
+  "liveness_ui_offline": "ಆಫ್‌ಲೈನ್: ಕೊನೆಯ ಸಿಂಕ್ ಮಾಡಿದ ಸಂರಚನೆ ಬಳಕೆಯಲ್ಲಿದೆ",
+  "liveness_ui_online": "ಆನ್‌ಲೈನ್",
+  "liveness_ui_attempt": "ಪ್ರಯತ್ನ {current} / {max}",
+  "@liveness_ui_attempt": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "liveness_ui_title_resident": "ನಿವಾಸಿಯ ಮುಖ ಸೆರೆಹಿಡಿಯುವಿಕೆ",
+  "liveness_ui_title_operator": "ಆಪರೇಟರ್ ದೃಢೀಕರಣ",
+  "liveness_ui_title_supervisor": "ಮೇಲ್ವಿಚಾರಕರ ದೃಢೀಕರಣ",
+  "liveness_login_with_face": "ಮುಖದಿಂದ ಲಾಗಿನ್ ಮಾಡಿ",
+  "liveness_auth_with_face": "ಮುಖದಿಂದ ದೃಢೀಕರಿಸಿ",
+  "liveness_face_auth_hint": "ಪಾಸ್‌ವರ್ಡ್ ಇಲ್ಲವೇ? ನಿಮ್ಮ ಮುಖದಿಂದ ದೃಢೀಕರಿಸಲು ಇದನ್ನು ಖಾಲಿ ಬಿಡಿ (ಮುಖ ದೃಢೀಕರಣ ಸಕ್ರಿಯವಾಗಿದ್ದರೆ)."
 }

@@ -185,7 +185,7 @@
   "system_storage_usage": "System Storage Usage",
   "download_pre_registration_data": "Download Pre-Registration Data",
   "update_operator_biomterics": "Update Operator Biometrics",
-  "onboard_operator_biomterics":"Onboard Operator Biometrics",
+  "onboard_operator_biomterics": "Onboard Operator Biometrics",
   "appliction_upload": "Application Upload",
   "check_updates": "Check Updates",
   "center_remap_sync": "Center Remap Sync.",
@@ -340,19 +340,19 @@
   "no_access_to_this_page": "You don't have access to this page",
   "doc_size_exceeded": "File size exceeds limit {size}",
   "@doc_size_exceeded": {
-     "placeholders": {
-       "size": {
-         "type": "String"
-       }
-     }
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
   },
   "age_should_not_be_greater": "Age should not be greater than {age} years",
   "@age_should_not_be_greater": {
-     "placeholders": {
-          "age": {
-          "type": "int"
-          }
-     }
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
   },
   "onboard_officer_biometric": "Officer's Biometric Onboarding",
   "update_officer_biometric": "Officer's Biometric Update",
@@ -361,12 +361,85 @@
   "search_for_key": "Search for Key",
   "no_devices_found": "No devices found",
   "connect_devices_and_scan": "Please connect your devices and tap 'Scan' to detect them",
-  "search_for_key": "Search for Key",
   "sync_restart_dialog_message": "The app will restart once you click Restart, and you will be redirected to the login page.",
   "sync_restart_button": "Restart",
   "app_restart_message": "Configuration saved successfully. Restarting app...",
   "select_option": "Select Option",
   "cron_expression": "Cron Expression",
   "id": "ID",
-  "name": "Name"
+  "name": "Name",
+  "liveness_passive_checking": "Checking face liveness…",
+  "liveness_challenge_blink": "Please blink",
+  "liveness_challenge_smile": "Please smile",
+  "liveness_challenge_turn_left": "Please turn your head to the left",
+  "liveness_challenge_turn_right": "Please turn your head to the right",
+  "liveness_challenge_look_left": "Please look to the left",
+  "liveness_challenge_look_right": "Please look to the right",
+  "liveness_challenge_look_up": "Please look up",
+  "liveness_challenge_look_down": "Please look down",
+  "liveness_challenge_eyes_closed_hold": "Please close your eyes and hold",
+  "liveness_challenge_open_mouth": "Please open your mouth",
+  "liveness_feedback_continue": "Please continue",
+  "liveness_feedback_action_detected": "Action detected",
+  "liveness_feedback_hold_still": "Hold still",
+  "liveness_feedback_captured": "Good, face captured successfully",
+  "liveness_failure_liveness": "We could not verify face liveness. Please try again.",
+  "liveness_failure_pad": "Face verification could not be completed. Please try again.",
+  "liveness_failure_max_retries": "Face verification could not be completed. Please follow the recovery process.",
+  "liveness_hint_look_camera": "Look directly at the camera.",
+  "liveness_hint_face_visible": "Ensure your face is clearly visible.",
+  "liveness_hint_lighting": "Improve lighting.",
+  "liveness_hint_capture_area": "Keep your face within the capture area.",
+  "liveness_hint_follow_prompt": "Follow the prompted action.",
+  "liveness_error_device_unavailable": "No camera device found",
+  "liveness_error_device_disconnected": "Device connection lost. Please reconnect.",
+  "liveness_error_camera_unavailable": "Camera not available",
+  "liveness_error_face_not_detected": "Keep your face within the capture area",
+  "liveness_error_multiple_faces": "Only one person should be in view",
+  "liveness_error_poor_quality_small": "Move closer to the camera",
+  "liveness_error_poor_quality_dark": "Improve lighting",
+  "liveness_error_poor_quality_blurry": "Hold still and keep the camera in focus",
+  "liveness_error_invalid_frame": "Device error. Please try again.",
+  "liveness_error_active_required": "We could not verify face liveness. Please try again.",
+  "liveness_error_challenge_failed": "We could not verify face liveness. Please try again. Follow the prompted action.",
+  "liveness_error_challenge_timeout": "We could not verify face liveness. Please try again. Respond within the time shown.",
+  "liveness_error_engine": "Face verification unavailable",
+  "liveness_spoken_challenge_blink": "Please blink",
+  "liveness_spoken_challenge_smile": "Please smile",
+  "liveness_spoken_challenge_turn_left": "Please turn your head to the left",
+  "liveness_spoken_challenge_turn_right": "Please turn your head to the right",
+  "liveness_spoken_challenge_look_left": "Please look to the left",
+  "liveness_spoken_challenge_look_right": "Please look to the right",
+  "liveness_spoken_challenge_look_up": "Please look up",
+  "liveness_spoken_challenge_look_down": "Please look down",
+  "liveness_spoken_challenge_eyes_closed_hold": "Please close your eyes and hold",
+  "liveness_spoken_challenge_open_mouth": "Please open your mouth",
+  "liveness_ui_badge_checking": "Checking",
+  "liveness_ui_badge_challenge": "Challenge",
+  "liveness_ui_badge_not_verified": "Not verified",
+  "liveness_ui_badge_stopped": "Stopped",
+  "liveness_ui_badge_retry": "Retry available",
+  "liveness_ui_badge_device_error": "Device error",
+  "liveness_ui_badge_verified": "Verified",
+  "liveness_ui_try_again": "Try again",
+  "liveness_ui_rescan": "Re-scan devices",
+  "liveness_ui_offline": "Offline: last synced configuration in use",
+  "liveness_ui_online": "Online",
+  "liveness_ui_attempt": "Attempt {current} of {max}",
+  "@liveness_ui_attempt": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "liveness_ui_title_resident": "Resident face capture",
+  "liveness_ui_title_operator": "Operator authentication",
+  "liveness_ui_title_supervisor": "Supervisor authentication",
+  "liveness_login_with_face": "Login with face",
+  "liveness_auth_with_face": "Authenticate with face",
+  "liveness_face_auth_hint": "No password? Leave it empty to authenticate with your face (if face authentication is enabled)."
 }
