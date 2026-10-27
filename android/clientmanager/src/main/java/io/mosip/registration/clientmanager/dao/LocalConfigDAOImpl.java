@@ -56,6 +56,10 @@ public class LocalConfigDAOImpl implements LocalConfigDAO {
             String name = entry.getKey();
             String value = entry.getValue();
 
+            if (io.mosip.registration.clientmanager.util.LivenessSettings.isServerOnlyKey(name)) {
+                Log.w(TAG, "Refused local override of a server-only liveness setting: " + name);
+                continue; // SAJEEV A4
+            }
             try {
                 saveOrUpdateLocalPreference(name, value, RegistrationConstants.PERMITTED_CONFIG_TYPE);
             } catch (Exception e) {

@@ -21,6 +21,27 @@ public class LivenessSettings {
     /** Face login and approval are new on Android and stay off until switched on, so the password path is unchanged. */
     public static final boolean DEFAULT_FACE_AUTH_ENABLED = false;
 
+    /**
+     * SAJEEV A4: liveness settings are security settings. They come from the server sync only: a local preference with such
+     * a key is refused when written and ignored when the configuration cache is built.
+     */
+    public static boolean isServerOnlyKey(String key) {
+        return key != null && key.trim().toLowerCase(java.util.Locale.ROOT).startsWith(PREFIX);
+    }
+
+    /** The map without the server-only keys (a copy; the input is not changed). */
+    public static java.util.Map<String, String> withoutServerOnlyKeys(java.util.Map<String, String> local) {
+        java.util.Map<String, String> out = new java.util.HashMap<>();
+        if (local != null) {
+            for (java.util.Map.Entry<String, String> e : local.entrySet()) {
+                if (!isServerOnlyKey(e.getKey())) {
+                    out.put(e.getKey(), e.getValue());
+                }
+            }
+        }
+        return out;
+    }
+
     private final GlobalParamRepository params;
 
     public LivenessSettings(GlobalParamRepository params) {

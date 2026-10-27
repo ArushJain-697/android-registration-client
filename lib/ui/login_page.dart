@@ -32,6 +32,7 @@ import 'package:registration_client/utils/app_config.dart';
 import 'package:registration_client/utils/responsive.dart';
 import 'package:registration_client/ui/widgets/password_component.dart';
 import 'package:registration_client/liveness/face_auth_flow.dart';
+import 'package:registration_client/liveness/liveness_gate.dart';
 import 'package:registration_client/ui/widgets/username_component.dart';
 import 'package:colorful_progress_indicators/colorful_progress_indicators.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -77,6 +78,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     connectivityProvider =
         Provider.of<ConnectivityProvider>(context, listen: false);
     _initializeAppData();
+    LivenessGate.startFlow(); // a new login screen is a new login flow
     FaceAuthFlow.enabled().then((v) {
       if (mounted) setState(() => _faceAuthOn = v);
     });

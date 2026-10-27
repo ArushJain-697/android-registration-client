@@ -15,6 +15,7 @@ import 'package:registration_client/provider/biometric_capture_control_provider.
 import 'package:registration_client/provider/global_provider.dart';
 import 'package:registration_client/utils/app_config.dart';
 import 'package:registration_client/utils/biometrics_utils.dart';
+import 'package:registration_client/liveness/liveness_gate.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:registration_client/provider/auth_provider.dart';
@@ -381,6 +382,9 @@ class _OperatorBiometricCaptureScanBlockViewState
           onPressed: () async {
             if (biometricAttributeData.exceptions.contains(false)) {
               List<Uint8List?> tempImageList = [];
+              // SAJEEV A1: the onboarded face becomes the reference template, so it needs liveness like any face capture.
+              if (!await LivenessGate.passIfFace(context, biometricAttributeData.title,
+                  workflow: 'OPERATOR', scope: 'ONBOARD')) return;
               await BiometricsApi().invokeDiscoverSbi("operatorBiometrics",
                   biometricAttributeData.title.replaceAll(" ", ""));
               await BiometricsApi()

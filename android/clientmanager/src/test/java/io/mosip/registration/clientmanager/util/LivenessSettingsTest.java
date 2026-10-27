@@ -64,4 +64,21 @@ public class LivenessSettingsTest {
         when(repo.getCachedStringGlobalParam(LivenessSettings.FACE_AUTH_ENABLED)).thenReturn("true");
         assertTrue(new LivenessSettings(repo).faceAuthEnabled());
     }
+
+    @Test
+    public void test_local_override_of_liveness_keys_is_ignored() {
+        assertTrue(LivenessSettings.isServerOnlyKey("mosip.registration.liveness.enabled"));
+        assertTrue(LivenessSettings.isServerOnlyKey("  MOSIP.registration.liveness.passive.threshold"));
+        assertFalse(LivenessSettings.isServerOnlyKey("mosip.registration.scan_timeout"));
+        assertFalse(LivenessSettings.isServerOnlyKey(null));
+        java.util.Map<String, String> local = new java.util.HashMap<>();
+        local.put("mosip.registration.liveness.enabled", "false");
+        local.put("mosip.registration.liveness.passive.threshold", "0");
+        local.put("mosip.registration.other", "x");
+        java.util.Map<String, String> kept = LivenessSettings.withoutServerOnlyKeys(local);
+        assertEquals(1, kept.size());
+        assertEquals("x", kept.get("mosip.registration.other"));
+        assertEquals(3, local.size()); // the input is untouched
+        assertTrue(LivenessSettings.withoutServerOnlyKeys(null).isEmpty());
+    }
 }

@@ -23,16 +23,48 @@ class LivenessRetries {
 }
 
 class LivenessGate {
-  static LivenessRetries retries = LivenessRetries(3);
+  /// Failed-attempt counters, one per scope (workflow, or an explicit scope such as 'ONBOARD'). They are not shared, so
+  /// failures at the login screen never block registration capture and the other way round.
+  static final Map<String, LivenessRetries> _counters = {};
+  static int _max = 3;
+
+  /// The counter of one scope (created on first use with the current limit).
+  static LivenessRetries retriesFor(String scope) => _counters.putIfAbsent(scope, () => LivenessRetries(_max));
+
+  /// Test and diagnostics access to the default (resident registration) counter.
+  static LivenessRetries get retries => retriesFor('RESIDENT');
+
+  /// The retry limit (maxRetries global parameter, default 3, never below 1). Existing counters keep their failures.
+  static void setMaxRetries(int? value) {
+    final max = (value == null || value < 1) ? 3 : value;
+    if (max == _max) return;
+    _max = max;
+    final old = Map<String, LivenessRetries>.from(_counters);
+    _counters.clear();
+    old.forEach((k, v) {
+      final n = LivenessRetries(max);
+      for (var i = 0; i < v.failures && i < max; i++) {
+        n.failed();
+      }
+      _counters[k] = n;
+    });
+  }
+
+  /// A new registration or login flow starts: every counter begins at zero.
+  static void startFlow() => _counters.forEach((_, v) => v.reset());
+
+  /// True for the captures that are a real face capture: the face and the exception photo (the SBI is asked for FACE).
+  static bool isFaceCapture(String modality) {
+    final m = modality.replaceAll(' ', '');
+    return m == 'Face' || m == 'Exception';
+  }
   static const _enabledKey = 'mosip.registration.liveness.enabled';
   static const _maxRetriesKey = 'mosip.registration.liveness.maxRetries';
 
   /// The client's own settings (global parameters): liveness on unless exactly "false"; retries default 3, never below 1.
   static Future<void> _loadSettings() async {
     try {
-      final r = int.tryParse((await ProcessSpecApi().getStringValueGlobalParam(_maxRetriesKey)).trim());
-      final max = (r == null || r < 1) ? 3 : r;
-      if (max != retries.max) retries = LivenessRetries(max);
+      setMaxRetries(int.tryParse((await ProcessSpecApi().getStringValueGlobalParam(_maxRetriesKey)).trim()));
     } catch (_) {
       // keep the current limit
     }
@@ -46,13 +78,16 @@ class LivenessGate {
     }
   }
 
-  /// True when the capture may start. Non-face modalities pass through untouched.
-  static Future<bool> passIfFace(BuildContext context, String modality, {String workflow = 'RESIDENT'}) async {
-    if (modality.replaceAll(' ', '') != 'Face') return true;
+  /// True when the capture may start. Non-face modalities pass through untouched. [scope] names the retry counter
+  /// (default: the workflow); operator onboarding uses its own scope so it never shares a counter with login.
+  static Future<bool> passIfFace(BuildContext context, String modality,
+      {String workflow = 'RESIDENT', String? scope}) async {
+    if (!isFaceCapture(modality)) return true;
     if (!await _enabled()) return true; // an administrator switched liveness off
     await _loadSettings();
     if (!context.mounted) return false;
     final lang = _lang(context);
+    final retries = retriesFor(scope ?? workflow);
     if (retries.exhausted) {
       await _info(context, livenessTexts['failure.max_retries']![lang]!);
       return false;
@@ -70,7 +105,7 @@ class LivenessGate {
     return false;
   }
 
-  static void resetAttempts() => retries.reset();
+  static void resetAttempts([String scope = 'RESIDENT']) => retriesFor(scope).reset();
 
   static String _lang(BuildContext c) {
     final l = Localizations.localeOf(c).languageCode;
