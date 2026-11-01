@@ -205,6 +205,39 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
   
+  /// SAJEEV #55: login after a face check that matched (offline session). The Java side refuses without its ticket.
+  authenticateUserWithFace(String username) async {
+    final authResponse = await auth.loginWithFace(username);
+    setIsLoggingIn(true);
+    if (authResponse.errorCode != null) {
+      _loginError = authResponse.errorCode!;
+      _isLoggedIn = false;
+    } else {
+      _userId = authResponse.userId;
+      _username = authResponse.username;
+      _userEmail = authResponse.userEmail;
+      _isDefault = authResponse.isDefault;
+      _isOfficer = authResponse.isOfficer;
+      _isSupervisor = authResponse.isSupervisor;
+      _isOperator = authResponse.isOperator;
+      _isLoggedIn = true;
+    }
+    setIsLoggingIn(false);
+    notifyListeners();
+  }
+
+  /// SAJEEV #55/#56: operator or supervisor authentication by face. The Java side refuses without its ticket.
+  authenticatePacketWithFace(String username) async {
+    final packetAuth = await auth.packetAuthenticationWithFace(username);
+    if (packetAuth.errorCode != null) {
+      _packetError = packetAuth.errorCode!;
+      _isPacketAuthenticated = false;
+    } else {
+      _isPacketAuthenticated = true;
+    }
+    notifyListeners();
+  }
+
   authenticatePacket(String username, String password) async {
     final packetAuth = await auth.packetAuthentication(username, password);
 

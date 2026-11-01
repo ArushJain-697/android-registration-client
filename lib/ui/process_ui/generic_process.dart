@@ -8,6 +8,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:registration_client/liveness/face_auth_flow.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -139,9 +140,33 @@ class _GenericProcessState extends State<GenericProcess>
     );
   }
 
+  /// SAJEEV #55: operator authentication by face (liveness, binding, 1:1 match). Used when the password is left empty and face
+  /// authentication is switched on; the password path is unchanged otherwise.
+  Future<bool> _authenticatePacketWithFace(BuildContext context) async {
+    if (authProvider.currentUser.userId != username) {
+      _showInSnackBar(appLocalizations.invalid_user);
+      return false;
+    }
+    final ok = await FaceAuthFlow.verify(context, username, 'OPERATOR');
+    if (!ok) {
+      _showInSnackBar(appLocalizations.liveness_failure_liveness);
+      return false;
+    }
+    await authProvider.authenticatePacketWithFace(username);
+    if (!authProvider.isPacketAuthenticated) {
+      _showErrorInSnackbar();
+      return false;
+    }
+    return true;
+  }
+
   _authenticatePacket(BuildContext context) async {
     if (!_validateUsername(context)) {
       return false;
+    }
+
+    if (password.isEmpty && await FaceAuthFlow.enabled()) {
+      return _authenticatePacketWithFace(context);
     }
 
     if (!_validatePassword(context)) {

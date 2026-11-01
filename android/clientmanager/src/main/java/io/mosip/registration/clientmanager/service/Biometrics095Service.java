@@ -131,6 +131,24 @@ public class Biometrics095Service extends BiometricsService {
 
     public List<BiometricsDto> handleRCaptureResponse(Modality modality, InputStream response, List<String> exceptionAttributes, boolean isOperatorOnboarding)
             throws BiometricsServiceException {
+        return handleRCaptureResponse(modality, response, exceptionAttributes, isOperatorOnboarding, false);
+    }
+
+    /** SAJEEV #55: parse a capture for face authentication: the operator de-duplication is skipped (the face IS an operator's). */
+    public List<BiometricsDto> handleRCaptureResponseForAuth(Modality modality, InputStream response, List<String> exceptionAttributes)
+            throws BiometricsServiceException {
+        return handleRCaptureResponse(modality, response, exceptionAttributes, false, true);
+    }
+
+    /** SAJEEV #55: 1:1 match of a captured face against the onboarded face of one user. */
+    public boolean matchOperatorFace(String userId, List<BiometricsDto> sample) {
+        IBioApiV2 provider = bioSdkProviderFactory != null ? bioSdkProviderFactory.getProviderForMatch(Modality.FACE) : null;
+        return MatchUtil.matchOperatorFace(userId, sample, userBiometricRepository, provider);
+    }
+
+    private List<BiometricsDto> handleRCaptureResponse(Modality modality, InputStream response, List<String> exceptionAttributes,
+                                                       boolean isOperatorOnboarding, boolean skipDedupe)
+            throws BiometricsServiceException {
         List<BiometricsDto> biometricsDtoList = new ArrayList<>();
         try {
             CaptureResponse captureResponse = objectMapper.readValue(response, new TypeReference<CaptureResponse>(){});
@@ -184,7 +202,7 @@ public class Biometrics095Service extends BiometricsService {
                     }
                 }
 
-               if(RegistrationConstants.ENABLE.equalsIgnoreCase(sharedPreferences.getString(RegistrationConstants.DEDUPLICATION_ENABLE_FLAG, ""))) {
+               if(!skipDedupe && RegistrationConstants.ENABLE.equalsIgnoreCase(sharedPreferences.getString(RegistrationConstants.DEDUPLICATION_ENABLE_FLAG, ""))) {
                     IBioApiV2 matchProvider = bioSdkProviderFactory != null ? bioSdkProviderFactory.getProviderForMatch(modality) : null;
 
                     if (matchProvider == null) {

@@ -94,6 +94,27 @@ public class MatchUtil {
     }
 
     /**
+     * SAJEEV #55: 1:1 face authentication. Matches the captured face only against the onboarded face of {@code userId}
+     * (never against other operators). False when that user has no onboarded face, or the SDK says no match.
+     */
+    public static boolean matchOperatorFace(String userId, List<BiometricsDto> sample,
+                                            UserBiometricRepository repo, IBioApiV2 sdk) {
+        if (userId == null || userId.trim().isEmpty() || sample == null || sample.isEmpty() || sdk == null) {
+            return false;
+        }
+        List<UserBiometric> mine = new ArrayList<>();
+        for (UserBiometric ub : repo.findAllOperatorBiometrics(BiometricType.FACE.toString())) {
+            if (userId.equals(ub.getUsrId())) {
+                mine.add(ub);
+            }
+        }
+        if (mine.isEmpty()) {
+            return false;
+        }
+        return matchBiometrics(BiometricType.FACE, mine, sample, sdk);
+    }
+
+    /**
      * Converts the {@link UserBiometric} and {@link BiometricsDto} to {@link BiometricRecord} and
      * {@link BiometricRecord array} respectively and calls the match method of Match-SDK library
      * to get the response of the decisions whether {@link Match MATCHED or NOT_MATCHED}

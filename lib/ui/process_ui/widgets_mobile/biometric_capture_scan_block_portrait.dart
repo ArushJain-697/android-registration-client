@@ -15,6 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:registration_client/liveness/liveness_gate.dart';
 import 'package:registration_client/model/biometric_attribute_data.dart';
 import 'package:registration_client/model/biometrics_dto.dart';
 import 'package:registration_client/model/field.dart';
@@ -53,6 +54,7 @@ class _BiometricCaptureScanBlockPortraitState
     globalProvider = Provider.of<GlobalProvider>(context, listen: false);
 
     super.initState();
+    LivenessGate.resetAttempts(); // a new capture screen is a new attempt flow
   }
 
   setInitialState() {
@@ -597,6 +599,7 @@ class _BiometricCaptureScanBlockPortraitState
               if (biometricAttributeData.attemptNo <
                   biometricAttributeData.noOfCapturesAllowed) {
                 List<Uint8List?> tempImageList = [];
+                if (!await LivenessGate.passIfFace(context, biometricAttributeData.title)) return;
                 await BiometricsApi().invokeDiscoverSbi(widget.field.id!,
                     biometricAttributeData.title.replaceAll(" ", ""));
                 await BiometricsApi()

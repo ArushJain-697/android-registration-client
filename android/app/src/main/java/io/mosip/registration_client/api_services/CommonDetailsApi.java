@@ -58,6 +58,12 @@ public class CommonDetailsApi implements CommonDetailsPigeon.CommonDetailsApi {
     public void saveVersionToGlobalParam(@NonNull String id, @NonNull String value, @NonNull CommonDetailsPigeon.Result<String> result) {
         String response = "";
         try {
+            if (io.mosip.registration.clientmanager.util.LivenessSettings.isServerOnlyKey(id)) {
+                // SAJEEV A4: liveness settings come from the server sync only, never from a UI-callable write
+                Log.w(getClass().getSimpleName(), "Refused UI write of a server-only liveness setting: " + id);
+                result.success("");
+                return;
+            }
             masterDataService.saveGlobalParam(id, value);
             response = "OK";
         } catch (Exception e) {
@@ -81,6 +87,12 @@ public class CommonDetailsApi implements CommonDetailsPigeon.CommonDetailsApi {
     public void saveScreenHeaderToGlobalParam(@NonNull String id, @NonNull String value, @NonNull CommonDetailsPigeon.Result<String> result) {
         String response = "";
         try {
+            if (io.mosip.registration.clientmanager.util.LivenessSettings.isServerOnlyKey(id)) {
+                // SAJEEV A4: liveness settings come from the server sync only, never from a UI-callable write
+                Log.w(getClass().getSimpleName(), "Refused UI write of a server-only liveness setting: " + id);
+                result.success("");
+                return;
+            }
             masterDataService.saveGlobalParam(id, value);
             response = "OK";
         } catch (Exception e) {

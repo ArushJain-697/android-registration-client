@@ -5,6 +5,7 @@
  *
 */
 
+import 'package:registration_client/liveness/liveness_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -96,6 +97,7 @@ class _LanguageSelectorState extends State<LanguageSelector> {
       debugPrint("GPS location capture failed: $e");
     }
 
+    LivenessGate.startFlow(); // a new registration flow: liveness retry counters start at zero
     List<String> langList = _getRegistrationLanguageList();
     await registrationTaskProvider.startRegistration(
         langList,

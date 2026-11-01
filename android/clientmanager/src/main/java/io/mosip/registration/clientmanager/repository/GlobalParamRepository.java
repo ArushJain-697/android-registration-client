@@ -305,7 +305,8 @@ public class GlobalParamRepository {
             // Merge: local preferences override global parameters
             globalParamMap.clear();
             globalParamMap.putAll(freshGlobalParams);
-            globalParamMap.putAll(localConfigs); // Local preferences take precedence
+            // Local preferences take precedence, except SAJEEV liveness settings (server-only, A4)
+            globalParamMap.putAll(io.mosip.registration.clientmanager.util.LivenessSettings.withoutServerOnlyKeys(localConfigs));
             bioSdkProviderConfigCache = null;
         } catch (Exception e) {
             Log.e(TAG, "Error refreshing configuration cache", e);

@@ -43,6 +43,32 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
+  Future<AuthResponse> loginWithFace(String username) async {
+    late AuthResponse authResponse;
+    try {
+      authResponse = await AuthResponseApi().loginWithFace(username);
+    } on PlatformException {
+      debugPrint('AuthResponseApi.loginWithFace failed');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return authResponse;
+  }
+
+  @override
+  Future<PacketAuth> packetAuthenticationWithFace(String username) async {
+    late PacketAuth packetAuth;
+    try {
+      packetAuth = await PacketAuthApi().authenticateWithFace(username);
+    } on PlatformException {
+      debugPrint('PacketAuthApi.authenticateWithFace failed');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return packetAuth;
+  }
+
+  @override
   Future<PacketAuth> packetAuthentication(
       String username, String password) async {
     late PacketAuth packetAuth;

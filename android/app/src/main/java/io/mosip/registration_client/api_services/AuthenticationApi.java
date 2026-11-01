@@ -196,6 +196,46 @@ public class AuthenticationApi implements AuthResponsePigeon.AuthResponseApi {
 
     }
 
+    /**
+     * SAJEEV #55: face login. Offline session only: a server token needs the password, so online features need a password
+     * login. Requires the face ticket (live, bound and matched), a user who has logged in with a password before (so a
+     * credential exists locally and has not expired), and an unlocked account.
+     */
+    @Override
+    public void loginWithFace(@NonNull String username, @NonNull AuthResponsePigeon.Result<AuthResponsePigeon.AuthResponse> result) {
+        auditManagerService.audit(AuditEvent.REG_LIVENESS_FACE_LOGIN, Components.LOGIN);
+        if (loginService.isUserLocked(username)) {
+            result.success(getAuthErrorResponse(LOCKOUT_ERROR_CODE));
+            return;
+        }
+        if (!FaceAuthTickets.INSTANCE.consume(username)) {
+            loginService.recordFailedLoginAttempt(username);
+            result.success(getAuthErrorResponse("REG_INVALID_REQUEST"));
+            return;
+        }
+        if (!loginService.isPasswordPresent(username)) {
+            result.success(getAuthErrorResponse("REG_CRED_EXPIRED"));
+            return;
+        }
+        try {
+            String token = loginService.saveUserAuthTokenOffline(username);
+            String preferredUsername = sharedPreferences.getString(PREFERRED_USERNAME, username);
+            String fullName = sharedPreferences.getString(USER_NAME, preferredUsername);
+            auditManagerService.audit(AuditEvent.NAV_HOME, Components.REGISTRATION);
+            result.success(new AuthResponsePigeon.AuthResponse.Builder()
+                    .setResponse(token).setUserId(username).setUsername(fullName)
+                    .setUserEmail(sharedPreferences.getString(USER_EMAIL, ""))
+                    .setIsDefault(sharedPreferences.getBoolean(IS_DEFAULT, false))
+                    .setIsOfficer(sharedPreferences.getBoolean(IS_OFFICER, false))
+                    .setIsOperator(sharedPreferences.getBoolean(IS_OPERATOR, false))
+                    .setIsSupervisor(sharedPreferences.getBoolean(IS_SUPERVISOR, false))
+                    .build());
+            loginService.resetFailedLoginAttempts(username);
+        } catch (Exception ex) {
+            result.success(getAuthErrorResponse("REG_CRED_EXPIRED"));
+        }
+    }
+
     @Override
     public void login(@NonNull String username, @NonNull String password, @NonNull Boolean isConnected, @NonNull AuthResponsePigeon.Result<AuthResponsePigeon.AuthResponse> result) {
         auditManagerService.audit(AuditEvent.LOGIN_WITH_PASSWORD, Components.LOGIN);

@@ -316,13 +316,13 @@
   "correct_application_id": "कृपया दर्ज की गई एप्लिकेशन आईडी की जांच करें या सही आईडी दर्ज करें और इसे दोबारा लाने का प्रयास करें।",
   "enter_application_id": "कृपया आवेदन आईडी दर्ज करें",
   "prid_length_greater": "एप्लिकेशन आईडी बिल्कुल {length} अंकों की होनी चाहिए।",
-    "@prid_length_greater": {
-      "placeholders": {
-        "length": {
-          "type": "int"
-        }
+  "@prid_length_greater": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
     }
-   },
+  },
   "okay": "ठीक है",
   "no_internet_connection": "कोई इंटरनेट कनेक्शन नहीं!",
   "connect_and_retry": "कृपया इंटरनेट से जुड़ें और पुनः प्रयास करें।",
@@ -340,19 +340,19 @@
   "scheduled_job_settings": "अनुसूचित कार्य सेटिंग्स",
   "doc_size_exceeded": "फ़ाइल का आकार सीमा {size} से अधिक है",
   "@doc_size_exceeded": {
-       "placeholders": {
-         "size": {
-           "type": "String"
-         }
-       }
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
   },
   "age_should_not_be_greater": "उम्र {age} वर्ष से अधिक नहीं होनी चाहिए।",
   "@age_should_not_be_greater": {
-       "placeholders": {
-            "age": {
-            "type": "int"
-            }
-       }
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
   },
   "onboard_officer_biometric": "अधिकारी का बायोमेट्रिक ऑनबोर्डिंग",
   "update_officer_biometric": "अधिकारी का बायोमेट्रिक अपडेट",
@@ -361,12 +361,85 @@
   "search_for_key": "कुंजी खोजें",
   "no_devices_found": "कोई डिवाइस नहीं मिला",
   "connect_devices_and_scan": "कृपया अपने डिवाइस कनेक्ट करें और उन्हें खोजने के लिए 'स्कैन' पर टैप करें",
-  "search_for_key": "कुंजी खोजें",
   "sync_restart_dialog_message": "जैसे ही आप पुनः आरंभ करें पर क्लिक करेंगे ऐप पुनः आरंभ हो जाएगा, और आपको लॉगिन पृष्ठ पर पुनः निर्देशित किया जाएगा।",
   "sync_restart_button": "पुनः आरंभ करें",
   "app_restart_message": "कॉन्फ़िगरेशन सफलतापूर्वक सहेजा गया. ऐप पुनः प्रारंभ हो रहा है...",
   "select_option": "विकल्प चुनें",
   "cron_expression": "क्रोन एक्सप्रेशन",
   "id": "आईडी",
-  "name": "नाम"
+  "name": "नाम",
+  "liveness_passive_checking": "चेहरे की सजीवता की जाँच हो रही है…",
+  "liveness_challenge_blink": "कृपया पलक झपकाएँ",
+  "liveness_challenge_smile": "कृपया मुस्कुराएँ",
+  "liveness_challenge_turn_left": "कृपया अपना सिर बाईं ओर घुमाएँ",
+  "liveness_challenge_turn_right": "कृपया अपना सिर दाईं ओर घुमाएँ",
+  "liveness_challenge_look_left": "कृपया बाईं ओर देखें",
+  "liveness_challenge_look_right": "कृपया दाईं ओर देखें",
+  "liveness_challenge_look_up": "कृपया ऊपर देखें",
+  "liveness_challenge_look_down": "कृपया नीचे देखें",
+  "liveness_challenge_eyes_closed_hold": "कृपया आँखें बंद करें और रुके रहें",
+  "liveness_challenge_open_mouth": "कृपया अपना मुँह खोलें",
+  "liveness_feedback_continue": "कृपया जारी रखें",
+  "liveness_feedback_action_detected": "क्रिया पहचानी गई",
+  "liveness_feedback_hold_still": "स्थिर रहें",
+  "liveness_feedback_captured": "बहुत अच्छा, चेहरा सफलतापूर्वक कैप्चर हो गया",
+  "liveness_failure_liveness": "हम चेहरे की सजीवता की पुष्टि नहीं कर सके। कृपया फिर से प्रयास करें।",
+  "liveness_failure_pad": "चेहरे का सत्यापन पूरा नहीं हो सका। कृपया फिर से प्रयास करें।",
+  "liveness_failure_max_retries": "चेहरे का सत्यापन पूरा नहीं हो सका। कृपया पुनर्प्राप्ति प्रक्रिया का पालन करें।",
+  "liveness_hint_look_camera": "सीधे कैमरे की ओर देखें।",
+  "liveness_hint_face_visible": "सुनिश्चित करें कि आपका चेहरा साफ़ दिख रहा है।",
+  "liveness_hint_lighting": "रोशनी बेहतर करें।",
+  "liveness_hint_capture_area": "अपना चेहरा कैप्चर क्षेत्र के भीतर रखें।",
+  "liveness_hint_follow_prompt": "बताई गई क्रिया करें।",
+  "liveness_error_device_unavailable": "कोई कैमरा उपकरण नहीं मिला",
+  "liveness_error_device_disconnected": "उपकरण से कनेक्शन टूट गया। कृपया फिर से जोड़ें।",
+  "liveness_error_camera_unavailable": "कैमरा उपलब्ध नहीं है",
+  "liveness_error_face_not_detected": "अपना चेहरा कैप्चर क्षेत्र के भीतर रखें",
+  "liveness_error_multiple_faces": "दृश्य में केवल एक व्यक्ति होना चाहिए",
+  "liveness_error_poor_quality_small": "कैमरे के और पास आएँ",
+  "liveness_error_poor_quality_dark": "रोशनी बेहतर करें",
+  "liveness_error_poor_quality_blurry": "स्थिर रहें और कैमरे का फ़ोकस बनाए रखें",
+  "liveness_error_invalid_frame": "उपकरण में त्रुटि। कृपया फिर से प्रयास करें।",
+  "liveness_error_active_required": "हम चेहरे की सजीवता की पुष्टि नहीं कर सके। कृपया फिर से प्रयास करें।",
+  "liveness_error_challenge_failed": "हम चेहरे की सजीवता की पुष्टि नहीं कर सके। कृपया फिर से प्रयास करें। बताई गई क्रिया करें।",
+  "liveness_error_challenge_timeout": "हम चेहरे की सजीवता की पुष्टि नहीं कर सके। कृपया फिर से प्रयास करें। दिखाए गए समय के भीतर प्रतिक्रिया दें।",
+  "liveness_error_engine": "चेहरे का सत्यापन उपलब्ध नहीं है",
+  "liveness_spoken_challenge_blink": "कृपया पलक झपकाएँ",
+  "liveness_spoken_challenge_smile": "कृपया मुस्कुराएँ",
+  "liveness_spoken_challenge_turn_left": "कृपया अपना सिर बाईं ओर घुमाएँ",
+  "liveness_spoken_challenge_turn_right": "कृपया अपना सिर दाईं ओर घुमाएँ",
+  "liveness_spoken_challenge_look_left": "कृपया बाईं ओर देखें",
+  "liveness_spoken_challenge_look_right": "कृपया दाईं ओर देखें",
+  "liveness_spoken_challenge_look_up": "कृपया ऊपर देखें",
+  "liveness_spoken_challenge_look_down": "कृपया नीचे देखें",
+  "liveness_spoken_challenge_eyes_closed_hold": "कृपया आँखें बंद करें और रुके रहें",
+  "liveness_spoken_challenge_open_mouth": "कृपया अपना मुँह खोलें",
+  "liveness_ui_badge_checking": "जाँच जारी",
+  "liveness_ui_badge_challenge": "चुनौती",
+  "liveness_ui_badge_not_verified": "सत्यापित नहीं",
+  "liveness_ui_badge_stopped": "रोका गया",
+  "liveness_ui_badge_retry": "पुनः प्रयास संभव",
+  "liveness_ui_badge_device_error": "उपकरण त्रुटि",
+  "liveness_ui_badge_verified": "सत्यापित",
+  "liveness_ui_try_again": "फिर से प्रयास करें",
+  "liveness_ui_rescan": "उपकरण फिर से खोजें",
+  "liveness_ui_offline": "ऑफ़लाइन: अंतिम समन्वयित विन्यास उपयोग में है",
+  "liveness_ui_online": "ऑनलाइन",
+  "liveness_ui_attempt": "प्रयास {current} / {max}",
+  "@liveness_ui_attempt": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "liveness_ui_title_resident": "निवासी का चेहरा कैप्चर",
+  "liveness_ui_title_operator": "ऑपरेटर प्रमाणीकरण",
+  "liveness_ui_title_supervisor": "पर्यवेक्षक प्रमाणीकरण",
+  "liveness_login_with_face": "चेहरे से लॉगिन करें",
+  "liveness_auth_with_face": "चेहरे से प्रमाणित करें",
+  "liveness_face_auth_hint": "पासवर्ड नहीं है? चेहरे से प्रमाणित करने के लिए इसे खाली छोड़ें (यदि चेहरा प्रमाणीकरण सक्षम है)।"
 }

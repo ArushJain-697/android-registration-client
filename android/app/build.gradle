@@ -133,6 +133,9 @@ flutter {
 }
 
 dependencies {
+    // SAJEEV liveness engine (ticket #48/#52)
+    implementation files('libs/sajeev-engine.aar')
+    implementation 'com.microsoft.onnxruntime:onnxruntime-android:1.19.2'
     def fragment_version = "1.4.1"
     def room_version = "2.4.0"
 

@@ -317,11 +317,11 @@
   "enter_application_id": "Veuillez saisir l'ID de la demande",
   "prid_length_greater": "L'ID de l'application doit contenir exactement {length} chiffres",
   "@prid_length_greater": {
-     "placeholders": {
-        "length": {
-          "type": "int"
-        }
-     }
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
   },
   "okay": "D'ACCORD",
   "no_internet_connection": "Pas de connexion Internet!",
@@ -340,19 +340,19 @@
   "scheduled_job_settings": "Paramètres des tâches planifiées",
   "doc_size_exceeded": "La taille du fichier dépasse la limite de {size}",
   "@doc_size_exceeded": {
-       "placeholders": {
-         "size": {
-           "type": "String"
-         }
-       }
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
   },
   "age_should_not_be_greater": "L'âge ne doit pas dépasser {age} ans.",
   "@age_should_not_be_greater": {
-       "placeholders": {
-            "age": {
-            "type": "int"
-            }
-       }
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
   },
   "onboard_officer_biometric": "Enregistrement biométrique de l’officier",
   "update_officer_biometric": "Mise à jour biométrique de l’officier",
@@ -361,13 +361,85 @@
   "search_for_key": "Rechercher une clé",
   "no_devices_found": "Aucun appareil trouvé",
   "connect_devices_and_scan": "Veuillez connecter vos appareils et appuyer sur 'ANALYSE' pour les détecter",
-  "search_for_key": "Rechercher une clé",
   "sync_restart_dialog_message": "L'application redémarrera une fois que vous aurez cliqué sur Redémarrer, et vous serez redirigé vers la page de connexion.",
   "sync_restart_button": "Redémarrer",
   "app_restart_message": "Configuration enregistrée avec succès. Redémarrage de l'application...",
   "select_option": "Sélectionner une option",
   "cron_expression": "Expression Cron",
   "id": "IDENTIFIANT",
-  "name": "Nom"
+  "name": "Nom",
+  "liveness_passive_checking": "Vérification de la vivacité du visage…",
+  "liveness_challenge_blink": "Veuillez cligner des yeux",
+  "liveness_challenge_smile": "Veuillez sourire",
+  "liveness_challenge_turn_left": "Veuillez tourner la tête vers la gauche",
+  "liveness_challenge_turn_right": "Veuillez tourner la tête vers la droite",
+  "liveness_challenge_look_left": "Veuillez regarder à gauche",
+  "liveness_challenge_look_right": "Veuillez regarder à droite",
+  "liveness_challenge_look_up": "Veuillez regarder vers le haut",
+  "liveness_challenge_look_down": "Veuillez regarder vers le bas",
+  "liveness_challenge_eyes_closed_hold": "Veuillez fermer les yeux et les garder fermés",
+  "liveness_challenge_open_mouth": "Veuillez ouvrir la bouche",
+  "liveness_feedback_continue": "Veuillez continuer",
+  "liveness_feedback_action_detected": "Action détectée",
+  "liveness_feedback_hold_still": "Restez immobile",
+  "liveness_feedback_captured": "Bien, visage capturé avec succès",
+  "liveness_failure_liveness": "Nous n'avons pas pu vérifier la vivacité du visage. Veuillez réessayer.",
+  "liveness_failure_pad": "La vérification du visage n'a pas pu être effectuée. Veuillez réessayer.",
+  "liveness_failure_max_retries": "La vérification du visage n'a pas pu être effectuée. Veuillez suivre la procédure de récupération.",
+  "liveness_hint_look_camera": "Regardez directement la caméra.",
+  "liveness_hint_face_visible": "Assurez-vous que votre visage est bien visible.",
+  "liveness_hint_lighting": "Améliorez l'éclairage.",
+  "liveness_hint_capture_area": "Gardez votre visage dans la zone de capture.",
+  "liveness_hint_follow_prompt": "Suivez l'action demandée.",
+  "liveness_error_device_unavailable": "Aucun appareil photo trouvé",
+  "liveness_error_device_disconnected": "Connexion à l'appareil perdue. Veuillez le reconnecter.",
+  "liveness_error_camera_unavailable": "Caméra non disponible",
+  "liveness_error_face_not_detected": "Gardez votre visage dans la zone de capture",
+  "liveness_error_multiple_faces": "Une seule personne doit être dans le champ",
+  "liveness_error_poor_quality_small": "Approchez-vous de la caméra",
+  "liveness_error_poor_quality_dark": "Améliorez l'éclairage",
+  "liveness_error_poor_quality_blurry": "Restez immobile et faites la mise au point",
+  "liveness_error_invalid_frame": "Erreur de l'appareil. Veuillez réessayer.",
+  "liveness_error_active_required": "Nous n'avons pas pu vérifier la vivacité du visage. Veuillez réessayer.",
+  "liveness_error_challenge_failed": "Nous n'avons pas pu vérifier la vivacité du visage. Veuillez réessayer. Suivez l'action demandée.",
+  "liveness_error_challenge_timeout": "Nous n'avons pas pu vérifier la vivacité du visage. Veuillez réessayer. Répondez dans le délai indiqué.",
+  "liveness_error_engine": "Vérification du visage indisponible",
+  "liveness_spoken_challenge_blink": "Veuillez cligner des yeux",
+  "liveness_spoken_challenge_smile": "Veuillez sourire",
+  "liveness_spoken_challenge_turn_left": "Veuillez tourner la tête vers la gauche",
+  "liveness_spoken_challenge_turn_right": "Veuillez tourner la tête vers la droite",
+  "liveness_spoken_challenge_look_left": "Veuillez regarder à gauche",
+  "liveness_spoken_challenge_look_right": "Veuillez regarder à droite",
+  "liveness_spoken_challenge_look_up": "Veuillez regarder vers le haut",
+  "liveness_spoken_challenge_look_down": "Veuillez regarder vers le bas",
+  "liveness_spoken_challenge_eyes_closed_hold": "Veuillez fermer les yeux et les garder fermés",
+  "liveness_spoken_challenge_open_mouth": "Veuillez ouvrir la bouche",
+  "liveness_ui_badge_checking": "Vérification",
+  "liveness_ui_badge_challenge": "Défi",
+  "liveness_ui_badge_not_verified": "Non vérifié",
+  "liveness_ui_badge_stopped": "Arrêté",
+  "liveness_ui_badge_retry": "Nouvel essai possible",
+  "liveness_ui_badge_device_error": "Erreur de l'appareil",
+  "liveness_ui_badge_verified": "Vérifié",
+  "liveness_ui_try_again": "Réessayer",
+  "liveness_ui_rescan": "Rechercher à nouveau les appareils",
+  "liveness_ui_offline": "Hors ligne : dernière configuration synchronisée utilisée",
+  "liveness_ui_online": "En ligne",
+  "liveness_ui_attempt": "Essai {current} sur {max}",
+  "@liveness_ui_attempt": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "liveness_ui_title_resident": "Capture du visage du résident",
+  "liveness_ui_title_operator": "Authentification de l'opérateur",
+  "liveness_ui_title_supervisor": "Authentification du superviseur",
+  "liveness_login_with_face": "Se connecter avec le visage",
+  "liveness_auth_with_face": "S'authentifier avec le visage",
+  "liveness_face_auth_hint": "Pas de mot de passe ? Laissez vide pour vous authentifier avec votre visage (si activé)."
 }
-
